@@ -1,0 +1,12 @@
+Project: Campus Fitness Tracking System
+Date: July 13, 2026
+
+Mya explained that the dashboard design is almost complete, but the mobile layout still needs improvement. She agreed to finish the updated design by Friday.
+
+John reported that the RFID reader can successfully read card UIDs, but the database sometimes creates duplicate running sessions. He will investigate the issue and provide an update next Monday.
+
+The team decided to store the treadmill data locally on the Raspberry Pi for the first prototype instead of building a real-time cloud system.
+
+The budget for an additional RFID reader has not yet been approved. Professor Tanaka asked the team to prepare a short cost comparison before the next meeting.
+
+The next meeting will be held on July 20 at 2:00 PM.

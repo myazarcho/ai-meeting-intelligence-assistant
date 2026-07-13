@@ -1,0 +1,32 @@
+{
+  "meeting_summary": "The team reviewed the dashboard, RFID integration, local data storage, and hardware budget. The dashboard is nearly complete, while duplicate running sessions remain a technical issue.",
+  "key_decisions": [
+    "Store treadmill data locally on the Raspberry Pi for the first prototype.",
+    "Do not build a real-time cloud system in the initial version."
+  ],
+  "action_items": [
+    {
+      "action": "Improve the mobile dashboard layout",
+      "owner": "Mya",
+      "deadline": "Friday"
+    },
+    {
+      "action": "Investigate duplicate running sessions and provide an update",
+      "owner": "John",
+      "deadline": "Next Monday"
+    },
+    {
+      "action": "Prepare a short cost comparison for an additional RFID reader",
+      "owner": "Team",
+      "deadline": "Before the next meeting"
+    }
+  ],
+  "risks_or_blockers": [
+    "Duplicate running sessions may affect data accuracy.",
+    "The budget for an additional RFID reader has not been approved."
+  ],
+  "open_questions": [
+    "Will the budget for an additional RFID reader be approved?"
+  ],
+  "follow_up_email": "Subject: Campus Fitness Tracking System – Meeting Follow-up\n\nHello team,\n\nThank you for today's discussion. We agreed to store treadmill data locally on the Raspberry Pi for the first prototype. Mya will update the mobile dashboard layout by Friday, and John will investigate the duplicate-session issue and report back next Monday. The team will also prepare a cost comparison for an additional RFID reader before the next meeting.\n\nOur next meeting is scheduled for July 20 at 2:00 PM.\n\nBest regards,"
+}

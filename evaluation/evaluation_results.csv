@@ -1,0 +1,2 @@
+sample_id,accuracy,completeness,owner_extraction,deadline_extraction,decision_clarity,hallucination_control,usefulness,human_editing_needed,notes
+meeting_01,,,,,,,,,
