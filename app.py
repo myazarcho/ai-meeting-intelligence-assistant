@@ -6,8 +6,7 @@ import streamlit as st
 
 BASE_DIR = Path(__file__).resolve().parent
 SAMPLE_PATH = BASE_DIR / "sample_data" / "meeting_01.txt"
-OUTPUT_PATH = BASE_DIR / "outputs" / "sample_output.json"
-
+from claude_service import MeetingAnalysisError, analyze_meeting
 
 def load_text(path: Path) -> str:
     try:
@@ -150,29 +149,36 @@ analyze_button = st.button(
 
 
 if analyze_button:
-    if not st.session_state.transcript.strip():
+    transcript = st.session_state.transcript.strip()
+
+    if not transcript:
         st.warning(
             "Please paste a transcript or load the sample transcript first."
         )
-
         st.session_state.show_result = False
 
     else:
-        st.session_state.analysis_result = load_json(OUTPUT_PATH)
-        st.session_state.show_result = True
+        try:
+            with st.spinner("Claude is analyzing the meeting..."):
+                result = analyze_meeting(transcript)
+
+            st.session_state.analysis_result = result
+            st.session_state.show_result = True
+            st.success("Meeting analysis completed.")
+
+        except MeetingAnalysisError as error:
+            st.session_state.analysis_result = None
+            st.session_state.show_result = False
+            st.error(str(error))
 
 
 if (
     st.session_state.show_result
     and st.session_state.analysis_result
 ):
-    st.warning(
-        "Demo note: this is the prepared output for the included sample "
-        "meeting. Custom text is not analyzed dynamically in Version 1."
-    )
-
-    render_result(st.session_state.analysis_result)
     
+    render_result(st.session_state.analysis_result)
+
 
 st.divider()
 st.caption(
