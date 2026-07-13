@@ -22,6 +22,19 @@ def load_json(path: Path) -> dict:
     except (FileNotFoundError, json.JSONDecodeError):
         return {}
 
+def clear_form() -> None:
+    """Clear the transcript and remove the displayed result."""
+    st.session_state.transcript = ""
+    st.session_state.analysis_result = None
+    st.session_state.show_result = False
+
+
+def load_sample() -> None:
+    """Load the included fictional transcript."""
+    st.session_state.transcript = load_text(SAMPLE_PATH)
+    st.session_state.analysis_result = None
+    st.session_state.show_result = False
+
 
 def render_result(result: dict) -> None:
     st.subheader("Meeting Summary")
@@ -79,44 +92,87 @@ st.set_page_config(
     layout="wide",
 )
 
+# Initialize application state.
+if "transcript" not in st.session_state:
+    st.session_state.transcript = ""
+
+if "analysis_result" not in st.session_state:
+    st.session_state.analysis_result = None
+
+if "show_result" not in st.session_state:
+    st.session_state.show_result = False
+
 st.title("AI Meeting Intelligence Assistant")
+
 st.caption(
-    "Transform an unstructured meeting transcript into a summary, "
-    "decisions, action items, deadlines, risks, and a follow-up email."
+    "Paste your own meeting transcript, or load the included fictional sample."
 )
 
 st.info(
-    "Version 1 is a portfolio prototype. It displays a prepared sample result "
-    "without requiring an API key."
+    "Version 1 is a UI prototype. It does not use live AI yet. "
+    "The Analyze Meeting button displays a prepared sample result "
+    "to demonstrate the planned output format."
 )
 
-sample_text = load_text(SAMPLE_PATH)
-sample_result = load_json(OUTPUT_PATH)
 
-transcript = st.text_area(
+# Transcript controls
+left_column, right_column = st.columns(2)
+
+with left_column:
+    st.button(
+        "Load Sample Transcript",
+        on_click=load_sample,
+        use_container_width=True,
+    )
+
+with right_column:
+    st.button(
+        "Clear",
+        on_click=clear_form,
+        use_container_width=True,
+    )
+
+
+# The key connects this widget to st.session_state.transcript.
+st.text_area(
     "Meeting transcript",
-    value=sample_text,
+    key="transcript",
     height=340,
     placeholder="Paste a meeting transcript here...",
 )
 
-col1, col2 = st.columns(2)
 
-with col1:
-    analyze = st.button("Analyze Meeting", type="primary", use_container_width=True)
+analyze_button = st.button(
+    "Analyze Meeting",
+    type="primary",
+    use_container_width=True,
+)
 
-with col2:
-    clear = st.button("Clear", use_container_width=True)
 
-if clear:
-    st.rerun()
+if analyze_button:
+    if not st.session_state.transcript.strip():
+        st.warning(
+            "Please paste a transcript or load the sample transcript first."
+        )
 
-if analyze:
-    if not transcript.strip():
-        st.warning("Please enter a meeting transcript.")
+        st.session_state.show_result = False
+
     else:
-        st.success("Demo analysis completed.")
-        render_result(sample_result)
+        st.session_state.analysis_result = load_json(OUTPUT_PATH)
+        st.session_state.show_result = True
+
+
+if (
+    st.session_state.show_result
+    and st.session_state.analysis_result
+):
+    st.warning(
+        "Demo note: this is the prepared output for the included sample "
+        "meeting. Custom text is not analyzed dynamically in Version 1."
+    )
+
+    render_result(st.session_state.analysis_result)
+    
 
 st.divider()
 st.caption(
