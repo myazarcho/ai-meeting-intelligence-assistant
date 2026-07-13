@@ -1,6 +1,20 @@
 # AI Meeting Intelligence Assistant
 
-An AI-powered application that transforms meeting transcripts into structured summaries, decisions, action items, deadlines, risks, open questions, and follow-up communications.
+A Streamlit-based prototype that uses the Claude API to transform meeting transcripts into structured summaries, decisions, action items, deadlines, risks, open questions, and follow-up emails.
+
+## Current Status
+
+Version 2 completed:
+- Live Claude API integration
+- Structured JSON output
+- Meeting summary generation
+- Decision and action-item extraction
+- Owner and deadline identification
+- Risk and open-question detection
+- Follow-up email generation
+- Secure API-key handling with `.env`
+
+This project is currently a working prototype, not a production system.
 
 ## Project Objective
 
